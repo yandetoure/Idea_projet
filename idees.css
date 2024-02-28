@@ -1,0 +1,53 @@
+.body{
+    background-color: rgb(222, 248, 248);
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.body-content{
+    background-color: #1da084;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        }
+
+h2{
+    text-align: center;
+    font-size: 23px;
+    font-weight: bold;
+    color: brown;
+}
+.card{
+    text-align: center;
+    padding-top: 50px;
+    width: 60%;
+    height: auto;
+    background-color: rgba(209, 189, 189, 0);
+    margin-bottom: 15px;
+}
+.form{
+    background-color: rgb(68, 68, 192);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px;
+    label{
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+     }
+button{
+    background-color: #4edde2;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    border-radius: 5%;
+}
+}
+input{
+    border: none;
+    border-bottom: 2px solid #4edde2;
+    height: 40px;
+}
