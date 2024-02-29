@@ -11,14 +11,13 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="accueil.css">
+    <link rel="stylesheet" href="mes_idees.css">
     <title>Mes idées</title>
 </head>
 
 <body class="body">
 
 <?php
-$Id_user = $_SESSION['user']['Id'];
 // Connexion à la base de données avec PDO
 try {
     $requete = "SELECT idees.id AS id_idee, prenom, users.nom AS nom_users, categories.nom AS category, libelle, idees.date_de_creation AS dates 
@@ -56,6 +55,8 @@ try {
             echo "<div class='card-footer'>";
             echo "<h5><strong>Date de publication :</strong> " . $row['dates'] . "</h5>";
             echo "</div>";
+            echo '<button> <a href="update.php">Supprimer</a> </button>';
+            echo '<button> <a href="update.php">Modifier</a> </button>';
             echo "</div>";
             echo "</div>";
 

@@ -2,6 +2,7 @@
 require_once('functions.php');
 require_once('header.php');
 include('server.php');
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +17,10 @@ include('server.php');
 
 <body class="body">
     <div class="PUB">
-        
     </div>
-
 <?php
 // Assurez-vous que la session est démarrée au début de votre script
-session_start();
+
 
 // Connexion à la base de données avec PDO
 try {
@@ -46,9 +45,9 @@ try {
 
             echo "<h3><strong>Publié par :</strong> " . $row['prenom'] .' '. $row['nom_users']."</h3>";
 
-            echo "<h4><strong>Catégorie :</strong> " . $row['category'] . "</h4>";
-
             echo "</div>";
+
+            echo "<h4><strong>Catégorie :</strong> " . $row['category'] . "</h4>";
 
             echo "<div class='card-body'>";
 
@@ -70,7 +69,6 @@ try {
     echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
 }
 ?>
-
 
 </body>
 

@@ -16,9 +16,19 @@ session_start();
 </head>
 
 <body class="body">
-
 <?php
-$Id = $_SESSION['user']['Id']; // Récupération de l'ID de l'utilisateur connecté
+            // Affiche la photo de profil si elle existe
+            if(file_exists("uploads/profile_picture.jpg")) {
+                echo '<img src="uploads/profile_picture.jpg" alt="Profile Picture">';
+            } else {
+                echo '<p>No profile picture available</p>';
+            }
+            ?>
+<h3>Ajouter une photo de profil?</h3>
+<input type="file" name="file" id="file">
+            <button type="submit" name="submit">Changer de photo</button>
+<?php
+$Id_user = $_SESSION['Id_user'];
 // Connexion à la base de données avec PDO
 try {
     $connexion = new PDO('mysql:host=localhost;dbname=Idea', 'root', '');
@@ -26,7 +36,7 @@ try {
 
     // Requête SQL pour récupérer les informations de l'utilisateur connecté
     $requete = $connexion->prepare("SELECT Id, prenom, nom, date_de_naissance, adresse, email, date_de_creation FROM users WHERE Id = :Id_user");
-    $requete->bindParam(':Id_user', $Id); // Liaison du paramètre
+    $requete->bindParam(':Id_user', $Id_user);
     $requete->execute();
 
     // Vérifie si la requête a renvoyé des résultats
@@ -52,6 +62,11 @@ try {
     }
 } catch (PDOException $e) {
     echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
+}
+if (isset($_SESSION['user'])) {
+    echo '<a href="logout.php">Déconnecter</a>';
+} else {
+    // Afficher le bouton de connexion ou rediriger vers la page de connexion si l'utilisateur n'est pas connecté
 }
 ?>
 

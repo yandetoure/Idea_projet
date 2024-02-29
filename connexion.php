@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if($requete->rowCount() == 1) {
         // Récupérez les informations de l'utilisateur
         $user = $requete->fetch(PDO::FETCH_ASSOC);
-
+    
         // Stockez les informations de l'utilisateur dans des variables de session
         $_SESSION['Id_user'] = $user['Id'];
         $_SESSION['prenom'] = $user['prenom'];
@@ -39,7 +39,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "Email ou mot de passe incorrect.";
     }
 }
-?>
 ?>
 
 <!DOCTYPE html>

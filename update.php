@@ -1,31 +1,33 @@
 <?php
+// Inclusion des fichiers nécessaires et démarrage de la session
+require_once('functions.php');
 require_once('header.php');
-require('server.php');
+include('server.php');
 session_start();
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+// Vérification de la soumission du formulaire
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupération des données du formulaire
+    $id_idee = $_POST['id_idee'];
+    $categorie = $_POST['category'];
     $libelle = $_POST['libelle'];
-    $statut = 0;
-    // Récupérer l'ID de l'utilisateur de la session
 
-    $Id_user = $_SESSION['Id_user'];
-    $categorie = $_POST['categorie']; // Assurez-vous que le nom du champ correspond au nom dans le formulaire
-    $date_de_creation = date("Y-m-d H:i:s");
+    // Requête SQL pour mettre à jour la catégorie de l'idée
+    $requete = "UPDATE idees SET Id_categorie = :nouvelle_categorie WHERE id = :id_idee";
 
     try {
-        $requete = $connexion->prepare("INSERT INTO idees (libelle, statut, date_de_creation,  Id_user, Id_categorie) VALUES (:libelle, :statut, :date_de_creation, :Id_user, :Id_categorie)");
-        $requete->bindParam(':libelle', $libelle);
-        $requete->bindParam(':statut', $statut);
-        $requete->bindParam(':date_de_creation', $date_de_creation);
-        $requete->bindParam(':Id_user', $Id_user);
-        $requete->bindParam(':Id_categorie', $categorie); // Utilisation de la variable $categorie plutôt que $Id_categorie
-        $requete->execute();
-        echo "<h4> Idée enregistrée avec succès</h4> ";
+        $stmt = $connexion->prepare($requete);
+        $stmt->bindParam(':id_idee', $id_idee);
+        $stmt->bindParam(':categorie', $categorie);
+        $stmt->bindParam(':libelle', $libelle);
+        $stmt->execute();
+
+        // Redirection vers la page précédente ou une autre page
+        header("Location: mes_idees.php");
+        exit();
     } catch (PDOException $e) {
-        echo "Erreur lors de l'insertion de l'enregistrement : " . $e->getMessage();
+        echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
     }
-} else {
-    echo 'Problème de connexion';
 }
 ?>
 
