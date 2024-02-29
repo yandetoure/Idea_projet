@@ -24,20 +24,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .content{
         text-align: center;
         padding-top: 50px;
-        width: 47%;
+        width: 67%;
         height: auto;
         background-color: darkorange;
         margin-bottom: 15px;
 
         .card-title{
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: black;
-            margin-bottom: 10px;
-            display: flex;
             padding-left: 55px;
         }
     

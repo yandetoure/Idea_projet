@@ -20,13 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	if ($user) {
-		// Vérifier le mot de passe
-
-
 		session_start();
 
 		// Authentification réussie, rediriger vers la page d'accueil
 		$_SESSION['user'] = $user; // Stocker le prénom dans la session
+		//$_SESSION['Id_user'] = $Id_user; 
 		header("Location: accueil.php");
 		exit();
 	}

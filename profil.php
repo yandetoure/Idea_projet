@@ -1,54 +1,73 @@
-<?php  require_once(__DIR__. '/functions.php');
-include ('server.php' )
+<?php
+require_once('functions.php');
+require_once('header.php');
+include('server.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="inscription.css">
-    <title>Inscription</title>
+    <link rel="stylesheet" href="accueil.css">
+    <title>Accueuil</title>
 </head>
-<body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-</head>
+
 <body class="body">
 
-<div class="card">
-<h2>Inscription</h2>
-    <form action="inscription.php" method="post" enctype="multipart/form-data" class="form">
+<?php
+// Assurez-vous que la session est démarrée au début de votre script
+session_start();
 
-    <label for="Prenom">Prénom :</label>
-        <input type="text" id="Prenom" name="Prenom" required><br>
+// Connexion à la base de données avec PDO
+try {
+    $connexion = new PDO('mysql:host=localhost;dbname=Idea', 'root', '');
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        <label for="Nom">Nom :</label>
-        <input type="text" id="Nom" name="Nom" required><br>
+    // Requête SQL pour récupérer les publications de l'utilisateur connecté avec les détails de l'utilisateur, la date de publication, la catégorie et l'idée publiée
+    $requete = "SELECT prenom, users.nom AS nom_users, categories.nom AS category, libelle, idees.date_de_creation AS dates FROM users JOIN idees ON users.Id = idees.Id_user JOIN categories ON idees.Id_categorie = categories.Id;"; 
+    $resultat = $connexion->prepare($requete);
+    $resultat->execute();
 
-        <label for="Adresse">Adresse :</label>
-        <input type="text" id="Adresse" name="Adresse" required><br>
+    // Vérifie si la requête a renvoyé des résultats
+    if ($resultat->rowCount() > 0) {
+        // Parcourir les résultats et afficher chaque publication sous forme de carte
+        while ($row = $resultat->fetch(PDO::FETCH_ASSOC)) {
 
-        <label for="Date_de_naissance">Date de naissance :</label>
-        <input type="text" id="Date_de_naissance" name="Date_de_naissance" required><br>
+            echo "<div class='body-content'>";
+            
+            echo "<div class='content'>";
 
-        <label for="Password">Mot de passe :</label>
-        <input type="Password" id="Password" name="Password" required><br>
+            echo "<div class='card-title'>";
 
-        <label for="Email">Email :</label>
-        <input type="Email" id="Email" name="Email" required><br>
-        
-       
-        <button type="submit" name="submit">S'inscrire</button>
-    </form>
-</div>
-   
+            echo "<h3>Publié par : " . $row['prenom'] .' '. $row['nom_users']."</h3>";
+
+            echo "</div>";
+            echo "<h4> Catégorie : " . $row['category'] . "</h4>";
+
+            echo "<div class='card-body'>";
+
+            echo "<h3>" . $row['libelle'] . "</h3>";
+
+            echo "</div>";
+
+            echo "<div class='card-footer'>";
+            echo "<h5><strong>Date de publication :</strong> " . $row['dates'] . "</h5>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+
+        }
+    } else {
+        echo "<p>Aucune publication disponible pour cet utilisateur.</p>";
+    }
+} catch (PDOException $e) {
+    echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
+}
+?>
+
+
 </body>
-</html>
 
-</body>
 </html>
