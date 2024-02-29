@@ -6,9 +6,14 @@
 }
 
 .pub{
-    background-image: url(img/1.gif);
-    height: 550px;
-    width: 100%;
+    background-image: url(img/3.gif);
+    height: 500px;
+    width: 860px;
+        a{
+            font-size: 20px;
+            margin-left: 60%;
+
+        }
         echo{
             padding: 15px;
         }
@@ -24,7 +29,7 @@
         padding-top: 50px;
         width: 47%;
         height: auto;
-        background-color: darkorange;
+        background: linear-gradient(to bottom, #fbccff, #ff99cc);
         margin-bottom: 15px;
 
         .card-title{

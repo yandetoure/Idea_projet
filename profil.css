@@ -5,19 +5,6 @@
     justify-content: center;
 }
 
-.pub{
-    background-image: url(img/3.gif);
-    height: 500px;
-    width: 860px;
-        a{
-            font-size: 20px;
-            margin-left: 60%;
-
-        }
-        echo{
-            padding: 15px;
-        }
-}
 .body-content{
     background-color: #fff;
     display: flex;
@@ -27,9 +14,9 @@
     .content{
         text-align: center;
         padding-top: 50px;
-        width: 47%;
+        width: 50%;
         height: auto;
-        background-color: darkorange;
+        background-color: rgb(112, 236, 199);
         margin-bottom: 15px;
 
         .card-title{

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </head>
 
     <body class="body">
-
+	<div class="body-content">
         <div class="card">
             <h2>Inscription</h2>
             <form action="inscription.php" method="post" class="form">
@@ -72,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button type="submit" name="submit">S'inscrire</button>
             </form>
         </div>
+    </div>
 
     </body>
 
