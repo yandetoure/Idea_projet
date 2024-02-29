@@ -2,6 +2,7 @@
 require_once('functions.php');
 require_once('header.php');
 include('server.php');
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -11,26 +12,23 @@ include('server.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="accueil.css">
-    <title>Accueuil</title>
+    <title>Mes idées</title>
 </head>
 
 <body class="body">
-    <div class="PUB">
-        
-    </div>
 
 <?php
-// Assurez-vous que la session est démarrée au début de votre script
-session_start();
-
+$Id_user = $_SESSION['user']['Id'];
 // Connexion à la base de données avec PDO
 try {
-    $connexion = new PDO('mysql:host=localhost;dbname=Idea', 'root', '');
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $requete = "SELECT idees.id AS id_idee, prenom, users.nom AS nom_users, categories.nom AS category, libelle, idees.date_de_creation AS dates 
+                FROM users 
+                JOIN idees ON users.Id = idees.Id_user 
+                JOIN categories ON idees.Id_categorie = categories.Id
+                WHERE idees.Id_user = :Id_user"; // Filtrez les idées par l'ID de l'utilisateur de la session
 
-    // Requête SQL pour récupérer les publications de l'utilisateur connecté avec les détails de l'utilisateur, la date de publication, la catégorie et l'idée publiée
-    $requete = "SELECT prenom, users.nom AS nom_users, categories.nom AS category, libelle, idees.date_de_creation AS dates FROM users JOIN idees ON users.Id = idees.Id_user JOIN categories ON idees.Id_categorie = categories.Id;"; 
     $resultat = $connexion->prepare($requete);
+    $resultat->bindParam(':Id_user', $_SESSION['Id_user']);
     $resultat->execute();
 
     // Vérifie si la requête a renvoyé des résultats
@@ -44,11 +42,10 @@ try {
 
             echo "<div class='card-title'>";
 
-            echo "<h3><strong>Publié par :</strong> " . $row['prenom'] .' '. $row['nom_users']."</h3>";
-
-            echo "<h4><strong>Catégorie :</strong> " . $row['category'] . "</h4>";
+            echo "<h3>Publié par : " . $row['prenom'] .' '. $row['nom_users']."</h3>";
 
             echo "</div>";
+            echo "<h4> Catégorie : " . $row['category'] . "</h4>";
 
             echo "<div class='card-body'>";
 

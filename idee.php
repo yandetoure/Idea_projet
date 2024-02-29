@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $requete->bindParam(':Id_user', $Id_user);
         $requete->bindParam(':Id_categorie', $categorie); // Utilisation de la variable $categorie plutôt que $Id_categorie
         $requete->execute();
-        echo 'Idée enregistrée avec succès';
+        echo "<h4> Idée enregistrée avec succès</h4> ";
     } catch (PDOException $e) {
         echo "Erreur lors de l'insertion de l'enregistrement : " . $e->getMessage();
     }
@@ -40,16 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div class="body-content">
     <div class="card">
-        <h2>Ajouter une idée</h2>
+
 
         <form action="idee.php" method="post" enctype="multipart/form-data" class="form">
 
+        <h2>Ajouter une nouvelle idée</h2>
+
             <select name="categorie" id="categorie">
                 <?php
-                // Connexion à la base de données avec PDO
-                try {
-                    $connexion = new PDO('mysql:host=localhost;dbname=Idea', 'root', '');
-                    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     $requete = "SELECT Id, Nom FROM categories";
                     $resultat = $connexion->query($requete);
@@ -61,9 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     } else {
                         echo "<option>Aucune catégorie disponible</option>";
                     }
-                } catch (PDOException $e) {
-                    echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
-                }
                 ?>
             </select>
             <br>
